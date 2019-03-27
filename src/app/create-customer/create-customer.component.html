@@ -1,0 +1,38 @@
+<h3>Create Customer</h3>
+<div [hidden]="submitted" style="width: 400px;">
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">First Name</label>
+      <input type="text" class="form-control" id="firstName" required [(ngModel)]="customer.firstName" name="firstName">
+      <div *ngIf="firstNameInvalid" class="alert alert-danger">
+        First Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Last Name</label>
+      <input type="text" class="form-control" id="lastName" required [(ngModel)]="customer.lastName" name="lastName">
+      <div *ngIf="lastNameInvalid" class="alert alert-danger">
+        Last Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Email</label>
+      <input type="text" class="form-control" id="emailId" required [(ngModel)]="customer.emailId" name="emailId">
+      <div *ngIf="emailIdInvalid" class="alert alert-danger">
+        Email address is required.
+      </div>
+    </div>
+
+    <div *ngIf="errors" class="alert alert-danger">
+      {{ errors }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<div [hidden]="!submitted" class="alert alert-success">
+  You submitted successfully!
+</div>
