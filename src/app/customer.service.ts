@@ -39,6 +39,11 @@ export class CustomerService {
 }
 
 export class CustomerSearchCriteria {
+  
   sortColumn: string;
   sortDirection: string;
+  firstName: string;
+  lastName: string;
+  emailId: string;
+
 }
