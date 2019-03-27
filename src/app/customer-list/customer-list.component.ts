@@ -11,7 +11,14 @@ import { Component, OnInit } from "@angular/core";
 export class CustomerListComponent implements OnInit {
   customers: Observable<Customer[]>;
   errors: string = null;
-  criteria: CustomerSearchCriteria = { sortColumn: 'id', sortDirection: 'asc' };
+  criteria: CustomerSearchCriteria = {
+    sortColumn: 'id',
+    sortDirection: 'asc',
+    firstName: null,
+    lastName: null,
+    emailId: null
+  };
+  loading: boolean;
 
   constructor(private customerService: CustomerService) { }
 
@@ -19,13 +26,14 @@ export class CustomerListComponent implements OnInit {
     this.getCustomers(this.criteria);
   }
 
-  onSorted($event) {
+  onSorted($event: CustomerSearchCriteria) {
     this.criteria = $event;
     this.getCustomers($event);
   }
 
   getCustomers(criteria: CustomerSearchCriteria) {
     this.errors = null;
+    this.loading = true;
     this.customerService.getCustomersList(criteria)
       .subscribe(
         result => {
@@ -35,7 +43,7 @@ export class CustomerListComponent implements OnInit {
             this.errors = result.data;
           }
         },
-        error => console.log(error));
+        error => console.log(error), () => this.loading = false);
   }
 
   deleteCustomer(id: number) {
