@@ -1,0 +1,25 @@
+<div *ngIf="customer">
+    <!-- Modal -->
+    <div class="modal fade" id="changeStatus" tabindex="-1" role="dialog" aria-labelledby="changeStatus"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeStatus">Change Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select (change)="onChange($event.target.value)">
+                        <option *ngFor="let status of statusEnum" [selected]="status === customer.status" value="{{status}}">{{status}}</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeChangeStatusModel>Close</button>
+                    <button type="button" class="btn btn-primary" (click)="updateStatus()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

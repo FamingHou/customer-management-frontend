@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'customer', pathMatch: 'full' },
   { path: 'customers', component: CustomerListComponent },
   { path: 'add', component: CreateCustomerComponent },
+  { path: 'detail/:id', component: CustomerDetailsComponent },
 ];
 
 @NgModule({

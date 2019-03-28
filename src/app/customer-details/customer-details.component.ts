@@ -1,7 +1,10 @@
+
+import { switchMap } from 'rxjs/operators';
 import { Customer } from './../customer';
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { CustomerListComponent } from '../customer-list/customer-list.component';
+import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 
 @Component({
   selector: 'app-customer-details',
@@ -10,11 +13,16 @@ import { CustomerListComponent } from '../customer-list/customer-list.component'
 })
 export class CustomerDetailsComponent implements OnInit {
 
-  @Input() customer: Customer;
+  customer: Customer;
+  constructor(
+    private customerService: CustomerService,
+    private route: ActivatedRoute
+  ) { }
 
-  constructor(private customerService: CustomerService, private listComponent: CustomerListComponent) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    this.route.params.pipe
+      (switchMap((params: ParamMap) => this.customerService.getCustomer(+params.get('id'))))
+      .subscribe(customer => this.customer = customer);
   }
 
 }

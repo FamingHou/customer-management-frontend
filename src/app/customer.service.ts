@@ -49,11 +49,14 @@ export class CustomerService {
       }
     });
   }
+
+  updateStatus(customer: Customer): Observable<any> {
+    return this.http.post(`${this.baseUrl}/updatestatus`, customer);
+  }
+  
 }
 
 export class SortCriteria {
-  
   sortColumn: string;
   sortDirection: string;
-
 }

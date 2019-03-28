@@ -2,6 +2,7 @@ import { Observable, from } from "rxjs";
 import { CustomerService, SortCriteria } from "./../customer.service";
 import { Customer } from "./../customer";
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-customer-list",
@@ -17,11 +18,18 @@ export class CustomerListComponent implements OnInit {
   };
   conds: Customer = new Customer(); // query conditions
   loading: boolean;
+ 
+  selectedCustomer: Customer;
 
-  constructor(private customerService: CustomerService) { }
+  constructor(public router: Router, private customerService: CustomerService) { }
 
   ngOnInit() {
     this.getCustomers(this.criteria);
+  }
+
+  onSelect(customer: Customer){
+    this.selectedCustomer = customer;
+    console.log(this.selectedCustomer);
   }
 
   onSorted($event: SortCriteria) {
@@ -68,4 +76,10 @@ export class CustomerListComponent implements OnInit {
         },
         error => console.log(error));
   }
+
+  viewCustomer(customer: Customer) {
+    this.router.navigate(['/details']);
+  }
+
+  
 }
