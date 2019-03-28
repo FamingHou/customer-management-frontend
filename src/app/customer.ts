@@ -1,7 +1,7 @@
 export class Customer {
     id: number;
-    firstName: string;
-    lastName: string;
-    emailId: string;
-    active: boolean;
+    firstName: string = null;
+    lastName: string = null;
+    emailId: string = null;
+    active: boolean = null;
 }

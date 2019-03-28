@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Customer } from './customer';
 
 @Injectable({
   providedIn: 'root'
@@ -27,23 +28,32 @@ export class CustomerService {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
 
-  getCustomersList(criteria: CustomerSearchCriteria): Observable<any> {
-    console.log(criteria);
+  getCustomersList(sortCriteria: SortCriteria): Observable<any> {
+    console.log(sortCriteria);
     return this.http.get(`${this.baseUrl}`, {
       params: {
-        sortColumn : criteria.sortColumn,
-        sortDirection : criteria.sortDirection
+        sortColumn : sortCriteria.sortColumn,
+        sortDirection : sortCriteria.sortDirection
+      }
+    });
+  }
+
+  getCustomersByConds(conds: Customer, sortCriteria: SortCriteria): Observable<any> {
+    return this.http.get(`${this.baseUrl}/columns`, {
+      params: {
+        firstName: conds.firstName,
+        lastName: conds.lastName,
+        emailId: conds.emailId,
+        sortColumn : sortCriteria.sortColumn,
+        sortDirection : sortCriteria.sortDirection
       }
     });
   }
 }
 
-export class CustomerSearchCriteria {
+export class SortCriteria {
   
   sortColumn: string;
   sortDirection: string;
-  firstName: string;
-  lastName: string;
-  emailId: string;
 
 }

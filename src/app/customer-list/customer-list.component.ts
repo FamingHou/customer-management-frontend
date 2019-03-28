@@ -1,5 +1,5 @@
 import { Observable, from } from "rxjs";
-import { CustomerService, CustomerSearchCriteria } from "./../customer.service";
+import { CustomerService, SortCriteria } from "./../customer.service";
 import { Customer } from "./../customer";
 import { Component, OnInit } from "@angular/core";
 
@@ -11,13 +11,11 @@ import { Component, OnInit } from "@angular/core";
 export class CustomerListComponent implements OnInit {
   customers: Observable<Customer[]>;
   errors: string = null;
-  criteria: CustomerSearchCriteria = {
+  criteria: SortCriteria = {
     sortColumn: 'id',
-    sortDirection: 'asc',
-    firstName: null,
-    lastName: null,
-    emailId: null
+    sortDirection: 'asc'
   };
+  conds: Customer = new Customer(); // query conditions
   loading: boolean;
 
   constructor(private customerService: CustomerService) { }
@@ -26,15 +24,30 @@ export class CustomerListComponent implements OnInit {
     this.getCustomers(this.criteria);
   }
 
-  onSorted($event: CustomerSearchCriteria) {
+  onSorted($event: SortCriteria) {
     this.criteria = $event;
     this.getCustomers($event);
   }
 
-  getCustomers(criteria: CustomerSearchCriteria) {
+  getCustomersByConds(conds: Customer, sortCriteria: SortCriteria) {
     this.errors = null;
     this.loading = true;
-    this.customerService.getCustomersList(criteria)
+    this.customerService.getCustomersByConds(conds, sortCriteria)
+      .subscribe(
+        result => {
+          if (result.success) {
+            this.customers = result.data;
+          } else {
+            this.errors = result.data;
+          }
+        },
+        error => console.log(error), () => this.loading = false);
+  }
+
+  getCustomers(sortCriteria: SortCriteria) {
+    this.errors = null;
+    this.loading = true;
+    this.customerService.getCustomersList(sortCriteria)
       .subscribe(
         result => {
           if (result.success) {
