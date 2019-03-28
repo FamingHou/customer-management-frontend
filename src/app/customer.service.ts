@@ -39,7 +39,7 @@ export class CustomerService {
   }
 
   getCustomersByConds(conds: Customer, sortCriteria: SortCriteria): Observable<any> {
-    return this.http.get(`${this.baseUrl}/columns`, {
+    return this.http.get(`${this.baseUrl}/conditions`, {
       params: {
         firstName: conds.firstName,
         lastName: conds.lastName,
