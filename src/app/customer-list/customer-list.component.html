@@ -37,7 +37,7 @@
                             {{customer.status}}
                         </button>
                     </td>
-                    <td>{{customer.createdTime | date : "dd/MMM/yyyy hh:mm:ss"}}</td>
+                    <td>{{customer.createdTime | date : "dd/MMM/yyyy HH:mm:ss"}}</td>
                     <td>
                         <a [routerLink]="['/detail', customer.id]">Details</a>
                         <button type="button" class="btn btn-danger btn-sm mr-1"
