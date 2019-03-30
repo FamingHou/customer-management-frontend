@@ -24,6 +24,9 @@ export class UpdateStatusComponent implements OnInit {
   }
 
   updateStatus() {
+    if (this.customer.status == null) {
+      this.customer.status = 'prospective';
+    } 
     this.customerService.updateStatus(this.customer)
       .subscribe(
         data => {
